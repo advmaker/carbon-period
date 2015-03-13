@@ -281,7 +281,7 @@ class CarbonPeriod
         if ($start < $this->endDate) {
             $period = new static($start, $this->endDate);
 
-            $period->eachDays(CarbonDate::DAYS_PER_WEEK, function (CarbonPeriod $period) use ($dayOfWeek, $callback) {
+            $period->eachDays(CarbonDate::DAYS_PER_WEEK, function (CarbonPeriod $period) use ($callback) {
                 $callback(new static($period->start(), $period->start()->addDay()));
             });
         }
