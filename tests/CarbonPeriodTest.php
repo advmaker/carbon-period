@@ -3,8 +3,8 @@
 use Advmaker\CarbonPeriod;
 use Carbon\Carbon;
 
-class CarbonPeriodTest extends TestCase {
-
+class CarbonPeriodTest extends PHPUnit_Framework_TestCase
+{
     public function testOrder()
     {
         $period = CarbonPeriod::instance(Carbon::parse('+1 month'), Carbon::now());
@@ -312,5 +312,4 @@ class CarbonPeriodTest extends TestCase {
 
         $this->assertEquals($period->end(), $end);
     }
-
 }
