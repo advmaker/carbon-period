@@ -40,7 +40,6 @@ class CarbonPeriod
      *
      * @param \DateTime $startDate
      * @param \DateTime $endDate
-     * @internal param int $options
      */
     public function __construct(\DateTime $startDate = null, \DateTime $endDate = null)
     {
