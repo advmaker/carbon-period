@@ -71,13 +71,23 @@ class CarbonPeriod
     }
 
     /**
-     * Create a CarbonPeriod from start of this day.
+     * Create a CarbonPeriod from start of this day to current time.
      *
      * @return static
      */
     public static function today()
     {
         return new static(CarbonDate::today(), CarbonDate::now());
+    }
+
+    /**
+     * Create a CarbonPeriod from start of this day to end of this day.
+     *
+     * @return static
+     */
+    public static function thisDay()
+    {
+        return new static(CarbonDate::today(), CarbonDate::now()->endOfDay());
     }
 
     /**

@@ -26,6 +26,14 @@ class CarbonPeriodTest extends TestCase {
         $this->assertEquals(Carbon::now(), $period->end());
     }
 
+    public function testThisDay()
+    {
+        $period = CarbonPeriod::thisDay();
+
+        $this->assertEquals(Carbon::today(), $period->start());
+        $this->assertEquals(Carbon::now()->endOfDay(), $period->end());
+    }
+
     public function testLengthInYears()
     {
         $period = CarbonPeriod::instance(Carbon::now(), Carbon::parse('+1 year'));
