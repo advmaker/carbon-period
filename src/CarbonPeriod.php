@@ -50,8 +50,6 @@ class CarbonPeriod
             : $this->startDate->copy()->addDay()->startOfDay();
 
         $this->order();
-
-        return $this;
     }
 
     /**
