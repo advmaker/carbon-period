@@ -163,9 +163,12 @@ class CarbonPeriodTest extends PHPUnit_Framework_TestCase
     public function testContains()
     {
         $period = CarbonPeriod::lastWeek();
-        $date = Carbon::parse('last week +1 day');
 
-        $this->assertTrue($period->contains($date));
+        $this->assertTrue($period->contains(Carbon::parse('last week +1 day')));
+        $this->assertFalse($period->contains(Carbon::parse('last week -1 day')));
+
+        $this->assertTrue($period->contains('last week +1 day'));
+        $this->assertFalse($period->contains('last week -1 day'));
     }
 
     /**

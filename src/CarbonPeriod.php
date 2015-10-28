@@ -466,12 +466,16 @@ class CarbonPeriod
      * Determines if the instances contains a date.
      *
      * @see \Carbon\Carbon::between
-     * @param CarbonDate $date
+     * @param CarbonDate|string $date
      * @param bool $equal Indicates if a > and < comparison should be used or <= or >=
      * @return bool
      */
-    public function contains(CarbonDate $date, $equal = true)
+    public function contains($date, $equal = true)
     {
+        if (!$date instanceof CarbonDate) {
+            $date = CarbonDate::parse($date);
+        }
+
         return $date->between($this->startDate, $this->endDate, $equal);
     }
 }
