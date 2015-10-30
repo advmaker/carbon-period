@@ -173,23 +173,43 @@ class CarbonPeriod
     }
 
     /**
-     * Get the start date from the instance.
+     * Get the mutable start date from the instance.
      *
      * @return CarbonDate
      */
     public function start()
     {
-        return $this->startDate->copy();
+        return $this->startDate;
     }
 
     /**
-     * Get the end date from the instance.
+     * Get the immutable start date from the instance.
+     *
+     * @return CarbonDate|null
+     */
+    public function copyStart()
+    {
+        return $this->start()->copy();
+    }
+
+    /**
+     * Get the mutable end date from the instance.
      *
      * @return CarbonDate|null
      */
     public function end()
     {
-        return $this->endDate->copy();
+        return $this->endDate;
+    }
+
+    /**
+     * Get the immutable end date from the instance.
+     *
+     * @return CarbonDate|null
+     */
+    public function copyEnd()
+    {
+        return $this->end()->copy();
     }
 
     /**
@@ -202,14 +222,14 @@ class CarbonPeriod
      */
     public function each(\DateInterval $interval, \Closure $callback)
     {
-        $period = new static($this->start(), $this->start()->add($interval));
+        $period = new static($this->copyStart(), $this->copyStart()->add($interval));
 
         do {
             $callback(new static(
-                $period->start(),
-                $period->end() > $this->endDate ? $this->endDate : $period->end()
+                $period->copyStart(),
+                $period->copyEnd() > $this->end() ? $this->end() : $period->copyEnd()
             ));
-        } while ($period->add($interval)->start() < $this->endDate);
+        } while ($period->add($interval)->copyStart() < $this->end());
 
         return $this;
     }
@@ -287,16 +307,16 @@ class CarbonPeriod
      */
     public function eachDayOfWeek($dayOfWeek, \Closure $callback)
     {
-        $start = $this->startDate->copy();
+        $start = $this->copyStart();
         if ($start->dayOfWeek !== $dayOfWeek) {
             $start->next($dayOfWeek);
         }
 
-        if ($start < $this->endDate) {
-            $period = new static($start, $this->endDate);
+        if ($start < $this->end()) {
+            $period = new static($start, $this->end());
 
             $period->eachDays(CarbonDate::DAYS_PER_WEEK, function (CarbonPeriod $period) use ($callback) {
-                $callback(new static($period->start(), $period->start()->addDay()));
+                $callback(new static($period->copyStart(), $period->copyStart()->addDay()));
             });
         }
 
@@ -310,7 +330,7 @@ class CarbonPeriod
      */
     public function lengthInYears()
     {
-        return $this->startDate->diffInYears($this->endDate);
+        return $this->start()->diffInYears($this->end());
     }
 
     /**
@@ -320,7 +340,7 @@ class CarbonPeriod
      */
     public function lengthInMonths()
     {
-        return $this->startDate->diffInMonths($this->endDate);
+        return $this->start()->diffInMonths($this->end());
     }
 
     /**
@@ -330,7 +350,7 @@ class CarbonPeriod
      */
     public function lengthInWeeks()
     {
-        return $this->startDate->diffInWeeks($this->endDate);
+        return $this->start()->diffInWeeks($this->end());
     }
 
     /**
@@ -340,7 +360,7 @@ class CarbonPeriod
      */
     public function lengthInDays()
     {
-        return $this->startDate->diffInDays($this->endDate);
+        return $this->start()->diffInDays($this->end());
     }
 
     /**
@@ -350,7 +370,7 @@ class CarbonPeriod
      */
     public function lengthInHours()
     {
-        return $this->startDate->diffInHours($this->endDate);
+        return $this->start()->diffInHours($this->end());
     }
 
     /**
@@ -360,7 +380,7 @@ class CarbonPeriod
      */
     public function lengthInMinutes()
     {
-        return $this->startDate->diffInMinutes($this->endDate);
+        return $this->start()->diffInMinutes($this->end());
     }
 
     /**
@@ -370,7 +390,7 @@ class CarbonPeriod
      */
     public function lengthInSeconds()
     {
-        return $this->startDate->diffInSeconds($this->endDate);
+        return $this->start()->diffInSeconds($this->end());
     }
 
     /**
@@ -382,8 +402,8 @@ class CarbonPeriod
      */
     public function add(\DateInterval $interval)
     {
-        $this->startDate->add($interval);
-        $this->endDate->add($interval);
+        $this->start()->add($interval);
+        $this->end()->add($interval);
 
         return $this;
     }
@@ -397,8 +417,8 @@ class CarbonPeriod
      */
     public function sub(\DateInterval $interval)
     {
-        $this->startDate->sub($interval);
-        $this->endDate->sub($interval);
+        $this->start()->sub($interval);
+        $this->end()->sub($interval);
 
         return $this;
     }
@@ -490,6 +510,6 @@ class CarbonPeriod
             $date = CarbonDate::parse($date);
         }
 
-        return $date->between($this->startDate, $this->endDate, $equal);
+        return $date->between($this->start(), $this->end(), $equal);
     }
 }

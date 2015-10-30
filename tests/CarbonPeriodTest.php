@@ -5,6 +5,50 @@ use Carbon\Carbon;
 
 class CarbonPeriodTest extends PHPUnit_Framework_TestCase
 {
+    public function testStart()
+    {
+        $period = new CarbonPeriod();
+
+        $this->assertEquals($period->start(), Carbon::now());
+
+        $period->start()->addDay();
+
+        $this->assertEquals($period->start(), Carbon::now()->addDay());
+    }
+
+    public function testStartCopy()
+    {
+        $period = new CarbonPeriod();
+
+        $this->assertEquals($period->copyStart(), Carbon::now());
+
+        $period->copyStart()->addDay();
+
+        $this->assertEquals($period->copyStart(), Carbon::now());
+    }
+
+    public function testEnd()
+    {
+        $period = new CarbonPeriod();
+
+        $this->assertEquals($period->end(), Carbon::today()->addDay());
+
+        $period->end()->addDay();
+
+        $this->assertEquals($period->end(), Carbon::today()->addDays(2));
+    }
+
+    public function testEndCopy()
+    {
+        $period = new CarbonPeriod();
+
+        $this->assertEquals($period->copyEnd(), Carbon::today()->addDay());
+
+        $period->copyEnd()->addDay();
+
+        $this->assertEquals($period->copyEnd(), Carbon::today()->addDay());
+    }
+
     public function testOrder()
     {
         $period = CarbonPeriod::instance(Carbon::parse('+1 month'), Carbon::now());
