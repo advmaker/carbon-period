@@ -60,7 +60,8 @@ class CarbonPeriod
      *
      * @param \DateTime $startDate
      * @param \DateTime $endDate
-     * @return static
+     *
+     * @return CarbonPeriod
      */
     public static function instance(\DateTime $startDate = null, \DateTime $endDate = null)
     {
@@ -70,7 +71,7 @@ class CarbonPeriod
     /**
      * Create a CarbonPeriod from start of this day to current time.
      *
-     * @return static
+     * @return CarbonPeriod
      */
     public static function today()
     {
@@ -80,7 +81,7 @@ class CarbonPeriod
     /**
      * Create a CarbonPeriod from start of this day to end of this day.
      *
-     * @return static
+     * @return CarbonPeriod
      */
     public static function thisDay()
     {
@@ -90,7 +91,7 @@ class CarbonPeriod
     /**
      * Create a CarbonPeriod of last full week.
      *
-     * @return static
+     * @return CarbonPeriod
      */
     public static function lastWeek()
     {
@@ -105,7 +106,7 @@ class CarbonPeriod
     /**
      * Create a CarbonPeriod of last full month.
      *
-     * @return static
+     * @return CarbonPeriod
      */
     public static function lastMonth()
     {
@@ -120,7 +121,7 @@ class CarbonPeriod
     /**
      * Create a CarbonPeriod from closest monday to today.
      *
-     * @return static
+     * @return CarbonPeriod
      */
     public static function thisWeek()
     {
@@ -136,7 +137,7 @@ class CarbonPeriod
     /**
      * Create a CarbonPeriod instance from first day of current month to current date.
      *
-     * @return static
+     * @return CarbonPeriod
      */
     public static function thisMonth()
     {
@@ -147,7 +148,7 @@ class CarbonPeriod
     /**
      * Create a CarbonPeriod instance from 1 January of current year to current date.
      *
-     * @return static
+     * @return CarbonPeriod
      */
     public static function thisYear()
     {
@@ -160,7 +161,8 @@ class CarbonPeriod
      *
      * @param string $startDate
      * @param string $endDate
-     * @return static
+     *
+     * @return CarbonPeriod
      */
     public static function parse($startDate, $endDate)
     {
@@ -194,7 +196,8 @@ class CarbonPeriod
      * Set the internal iterator with interval for the instance.
      *
      * @param \DateInterval $interval
-     * @param \Closure $callback
+     * @param \Closure      $callback
+     *
      * @return CarbonDate|$this
      */
     public function each(\DateInterval $interval, \Closure $callback)
@@ -214,8 +217,9 @@ class CarbonPeriod
     /**
      * Set the internal iterator with day interval for the instance.
      *
-     * @param int $days
-     * @param callable $callback
+     * @param int      $days
+     * @param \Closure $callback
+     *
      * @return CarbonDate|$this
      */
     public function eachDays($days = 1, \Closure $callback)
@@ -226,9 +230,10 @@ class CarbonPeriod
     /**
      * Set the internal iterator with week interval for the instance.
      *
-     * @param int $weeks
-     * @param callable $callback
-     * @param bool $onlyFullWeek
+     * @param int      $weeks
+     * @param \Closure $callback
+     * @param bool     $onlyFullWeek
+     *
      * @return CarbonDate|$this
      */
     public function eachWeeks($weeks = 1, \Closure $callback, $onlyFullWeek = false)
@@ -250,9 +255,10 @@ class CarbonPeriod
     /**
      * Set the internal iterator with month interval for the instance.
      *
-     * @param int $months
-     * @param callable $callback
-     * @param bool $onlyFullMonth
+     * @param int      $months
+     * @param \Closure $callback
+     * @param bool     $onlyFullMonth
+     *
      * @return CarbonDate|$this
      */
     public function eachMonths($months = 1, \Closure $callback, $onlyFullMonth = false)
@@ -274,8 +280,9 @@ class CarbonPeriod
     /**
      * Set the internal iterator for day of week for the instance.
      *
-     * @param $dayOfWeek
-     * @param callable $callback
+     * @param int      $dayOfWeek
+     * @param \Closure $callback
+     *
      * @return $this
      */
     public function eachDayOfWeek($dayOfWeek, \Closure $callback)
@@ -370,6 +377,7 @@ class CarbonPeriod
      * Add \DateInterval to the instance.
      *
      * @param \DateInterval $interval
+     *
      * @return $this
      */
     public function add(\DateInterval $interval)
@@ -384,6 +392,7 @@ class CarbonPeriod
      * Sub \DateInterval from the instance.
      *
      * @param \DateInterval $interval
+     *
      * @return $this
      */
     public function sub(\DateInterval $interval)
@@ -397,7 +406,8 @@ class CarbonPeriod
     /**
      * Add years to the period.
      *
-     * @param $value
+     * @param int $value
+     *
      * @return CarbonPeriod
      */
     public function addYears($value)
@@ -408,7 +418,8 @@ class CarbonPeriod
     /**
      * Remove years from the period.
      *
-     * @param $value
+     * @param int $value
+     *
      * @return CarbonPeriod
      */
     public function subYears($value)
@@ -419,7 +430,8 @@ class CarbonPeriod
     /**
      * Add months to the period.
      *
-     * @param $value
+     * @param int $value
+     *
      * @return CarbonPeriod
      */
     public function addMonths($value)
@@ -430,7 +442,8 @@ class CarbonPeriod
     /**
      * Remove months from the period.
      *
-     * @param $value
+     * @param int $value
+     *
      * @return CarbonPeriod
      */
     public function subMonths($value)
@@ -441,7 +454,8 @@ class CarbonPeriod
     /**
      * Add days to the period.
      *
-     * @param $value
+     * @param int $value
+     *
      * @return CarbonPeriod
      */
     public function addDays($value)
@@ -452,7 +466,8 @@ class CarbonPeriod
     /**
      * Remove days from the period.
      *
-     * @param $value
+     * @param int $value
+     *
      * @return CarbonPeriod
      */
     public function subDays($value)
@@ -465,7 +480,8 @@ class CarbonPeriod
      *
      * @see \Carbon\Carbon::between
      * @param CarbonDate|string $date
-     * @param bool $equal Indicates if a > and < comparison should be used or <= or >=
+     * @param bool              $equal Indicates if a > and < comparison should be used or <= or >=
+     *
      * @return bool
      */
     public function contains($date, $equal = true)
