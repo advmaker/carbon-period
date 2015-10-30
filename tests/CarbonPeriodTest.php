@@ -215,6 +215,16 @@ class CarbonPeriodTest extends PHPUnit_Framework_TestCase
         $this->assertFalse($period->contains('last week -1 day'));
     }
 
+    public function testSetTimeToStartEndPoints()
+    {
+        $period = CarbonPeriod::instance(Carbon::now(), Carbon::tomorrow());
+
+        $period->setTimeToStartEndPoints();
+
+        $this->assertEquals($period->start(), Carbon::now()->startOfDay());
+        $this->assertEquals($period->end(), Carbon::tomorrow()->endOfDay());
+    }
+
     /**
      * Test the iterator for each weekday
      */

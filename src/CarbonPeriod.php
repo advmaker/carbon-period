@@ -496,6 +496,19 @@ class CarbonPeriod
     }
 
     /**
+     * Set time of start date to 00:00 and time of end date to 23:59
+     *
+     * @return $this
+     */
+    public function setTimeToStartEndPoints()
+    {
+        $this->start()->startOfDay();
+        $this->end()->endOfDay();
+
+        return $this;
+    }
+
+    /**
      * Determines if the instances contains a date.
      *
      * @see \Carbon\Carbon::between
