@@ -1,6 +1,7 @@
 <?php namespace Advmaker;
 
 use Carbon\Carbon as CarbonDate;
+use Carbon\CarbonInterval;
 
 class CarbonPeriod
 {
@@ -215,12 +216,12 @@ class CarbonPeriod
     /**
      * Set the internal iterator with interval for the instance.
      *
-     * @param \DateInterval $interval
-     * @param \Closure      $callback
+     * @param \DateInterval|CarbonInterval $interval
+     * @param \Closure                     $callback
      *
      * @return CarbonDate|$this
      */
-    public function each(\DateInterval $interval, \Closure $callback)
+    public function each($interval, \Closure $callback)
     {
         $period = new static($this->copyStart(), $this->copyStart()->add($interval));
 
@@ -244,7 +245,7 @@ class CarbonPeriod
      */
     public function eachDays($days = 1, \Closure $callback)
     {
-        return $this->each(new \DateInterval("P{$days}D"), $callback);
+        return $this->each(CarbonInterval::days($days), $callback);
     }
 
     /**
@@ -260,7 +261,7 @@ class CarbonPeriod
     {
         if ($this->lengthInWeeks() > 0) {
             return $this->each(
-                new \DateInterval("P{$weeks}W"),
+                CarbonInterval::weeks($weeks),
                 function (CarbonPeriod $period) use ($weeks, $callback, $onlyFullWeek) {
                     if (!$onlyFullWeek || $period->lengthInWeeks() === $weeks) {
                         call_user_func_array($callback, func_get_args());
@@ -285,7 +286,7 @@ class CarbonPeriod
     {
         if ($this->lengthInMonths() > 0) {
             return $this->each(
-                new \DateInterval("P{$months}M"),
+                CarbonInterval::months($months),
                 function (CarbonPeriod $period) use ($months, $callback, $onlyFullMonth) {
                     if (!$onlyFullMonth || $period->lengthInMonths() === $months) {
                         call_user_func_array($callback, func_get_args());
@@ -396,11 +397,11 @@ class CarbonPeriod
     /**
      * Add \DateInterval to the instance.
      *
-     * @param \DateInterval $interval
+     * @param \DateInterval|CarbonInterval $interval
      *
      * @return $this
      */
-    public function add(\DateInterval $interval)
+    public function add($interval)
     {
         $this->start()->add($interval);
         $this->end()->add($interval);
@@ -411,11 +412,11 @@ class CarbonPeriod
     /**
      * Sub \DateInterval from the instance.
      *
-     * @param \DateInterval $interval
+     * @param \DateInterval|CarbonInterval $interval
      *
      * @return $this
      */
-    public function sub(\DateInterval $interval)
+    public function sub($interval)
     {
         $this->start()->sub($interval);
         $this->end()->sub($interval);
@@ -432,7 +433,7 @@ class CarbonPeriod
      */
     public function addYears($value)
     {
-        return $this->add(new \DateInterval("P{$value}Y"));
+        return $this->add(CarbonInterval::years($value));
     }
 
     /**
@@ -444,7 +445,7 @@ class CarbonPeriod
      */
     public function subYears($value)
     {
-        return $this->sub(new \DateInterval("P{$value}Y"));
+        return $this->sub(CarbonInterval::years($value));
     }
 
     /**
@@ -456,7 +457,7 @@ class CarbonPeriod
      */
     public function addMonths($value)
     {
-        return $this->add(new \DateInterval("P{$value}M"));
+        return $this->add(CarbonInterval::months($value));
     }
 
     /**
@@ -468,7 +469,7 @@ class CarbonPeriod
      */
     public function subMonths($value)
     {
-        return $this->sub(new \DateInterval("P{$value}M"));
+        return $this->sub(CarbonInterval::months($value));
     }
 
     /**
@@ -480,7 +481,7 @@ class CarbonPeriod
      */
     public function addDays($value)
     {
-        return $this->add(new \DateInterval("P{$value}D"));
+        return $this->add(CarbonInterval::days($value));
     }
 
     /**
@@ -492,7 +493,7 @@ class CarbonPeriod
      */
     public function subDays($value)
     {
-        return $this->sub(new \DateInterval("P{$value}D"));
+        return $this->sub(CarbonInterval::days($value));
     }
 
     /**
