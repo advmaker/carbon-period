@@ -526,4 +526,25 @@ class CarbonPeriod
 
         return $date->between($this->start(), $this->end(), $equal);
     }
+
+    /**
+     * Iterate period over each day
+     *
+     * @param \Closure $callback
+     *
+     * @return CarbonPeriod
+     */
+    public function iterateDays(\Closure $callback)
+    {
+        $period = new static($this->copyStart(), $this->copyEnd());
+
+        do {
+            $callback($period->start());
+            $period = new static($period->start()->addDay(1), $period->end());
+        } while ($period->start() < $period->end());
+
+        $callback($period->end());
+
+        return $this;
+    }
 }
