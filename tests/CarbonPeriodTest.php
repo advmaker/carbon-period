@@ -374,15 +374,15 @@ class CarbonPeriodTest extends PHPUnit_Framework_TestCase
     {
         $totalDays = mt_rand(7, 14);
         $start = Carbon::today()->addDay(-$totalDays);
-        $end   = Carbon::today();
+        $end = Carbon::today();
 
         $period = CarbonPeriod::instance($start, $end);
         $count = 0;
 
-        $period->iterateDays(function(Carbon $day) use(&$count) {
+        $period->iterateDays(function (Carbon $day) use (&$count) {
             $count++;
         });
 
-        $this->assertEquals($count, $totalDays+1);
+        $this->assertEquals($count, $totalDays + 1);
     }
 }
