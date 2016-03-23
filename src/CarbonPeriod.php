@@ -534,7 +534,7 @@ class CarbonPeriod
      *
      * @return CarbonPeriod
      */
-    public function iterateDays(\Closure $callback)
+    public function iterateDates(\Closure $callback)
     {
         $period = new static($this->copyStart(), $this->copyEnd());
 
