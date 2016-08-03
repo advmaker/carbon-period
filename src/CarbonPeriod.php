@@ -474,4 +474,24 @@ class CarbonPeriod
     {
         return $date->between($this->startDate, $this->endDate, $equal);
     }
+
+    /**
+     * Iterate period over each day
+     *
+     * @param \Closure $callback
+     *
+     * @return CarbonPeriod
+     */
+    public function iterateDates(\Closure $callback)
+    {
+        $interval = new \DateInterval('P1D');
+
+        $period = new \DatePeriod($this->start()->copy()->startOfDay(), $interval, $this->end()->copy()->startOfDay());
+
+        foreach ($period as $date) {
+            $callback($date);
+        }
+
+        return $this;
+    }
 }
