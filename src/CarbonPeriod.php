@@ -536,14 +536,12 @@ class CarbonPeriod
      */
     public function iterateDates(\Closure $callback)
     {
-        $period = new static($this->copyStart(), $this->copyEnd());
+        $period = new static($this->copyStart()->startOfDay(), $this->copyEnd()->startOfDay());
 
         do {
             $callback($period->start());
-            $period = new static($period->start()->addDay(1), $period->end());
+            $period->start()->addDay(1);
         } while ($period->start() < $period->end());
-
-        $callback($period->end());
 
         return $this;
     }
